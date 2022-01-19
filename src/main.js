@@ -4,6 +4,9 @@ import { config as dotenv } from 'dotenv'
 // load in the env variables
 dotenv()
 
+// random number generator
+const random = () => Math.floor(Math.random() * 100000) + 1
+
 // twitter client object
 const twitterClient = new TwitterClient({
     apiKey: process.env.TWITTER_API_KEY,
@@ -21,28 +24,37 @@ const tweets = [
   `Tweeting out for ${tag}, got a bunch more of these!`,
   `Guys, it's time for ${tag} so you better get tweeting!`,
   `I am once again here to tell you that it is ${tag} day, so that Bell spends more money!`,
-  `This is not the first, and it wont be the last time that I tweet about ${tag}`,
-  `I am tweet. Here is a hashtag: ${tag}`,
+  `This is not the first, and it wont be the last time that I tweet about ${tag}.`,
+  `I am tweet. Here is a hashtag: ${tag}.`,
   `Man I am keep coming up with more things to write about for ${tag} day.`,
-  `Hopefully this tweet isn\'t the one I just sent! Anyway, ${tag}`,
-  `I am once again asking for Bell's financial support ${tag}`,
-  `Guys! Come on! Just make Bell spend more money! It's time for ${tag}`,
+  `Hopefully this tweet isn\'t the one I just sent! Anyway, ${tag}.`,
+  `I am once again asking for Bell's financial support ${tag}.`,
+  `Guys! Come on! Just make Bell spend more money! It's time for ${tag}.`,
   `Been a while since I've last tweeted about ${tag}, hasn't it?`,
   `What if I sent another tweet about ${tag}, that would be crazy wouldn't it?`,
-  `I just want to make Bell spend more money, I guess I'll do it again: ${tag}`,
+  `I just want to make Bell spend more money, I guess I'll do it again: ${tag}.`,
   `Knock knock\n\nWho's there?\n\n${tag} day!`
 ]
 
 // send the tweet
 const sendTweet = () => {
+  // choose the tweet to send
+  const tweet = `${tweets[Math.floor((Math.random() * tweets.length))]} Random number: ${random()}`
+
+  // send the tweet
   twitterClient.tweetsV2.createTweet({
-    text: tweets[Math.floor((Math.random() * tweets.length))]
+    text: tweet
   }).then(() => {
     console.log('Tweeted again.')
-  }).catch(err => console.error('Didn\'t tweet: ' + err))
+  }).catch(err => {
+    console.error(err)
+  })
 }
 
+// log the start and send the tweet
 console.log('Tweeter started up!')
+sendTweet()
+console.log('Tweeted.')
 
 // the interval to tweet at
 // 36 seconds amounts to 2400 tweets in a day, which is the most allowed by the API
