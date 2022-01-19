@@ -44,6 +44,10 @@ const sendTweet = () => {
 
 console.log('Tweeter started up!')
 
+// the interval to tweet at
+// 36 seconds amounts to 2400 tweets in a day, which is the most allowed by the API
+const interval = 36
+
 // run it every minute
-setInterval(sendTweet, 60 * 1000)
+setInterval(sendTweet, interval * 1000)
 
